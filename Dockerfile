@@ -1,7 +1,5 @@
 FROM registry.access.redhat.com/ubi7/ubi AS rhel7builder
 
-ARG CRICTL_VERSION=1.33.0
-
 RUN yum install -y gcc openssl-devel && \
     rm -rf /var/cache/dnf && \
     curl https://sh.rustup.rs -sSf | sh -s -- -y
@@ -15,6 +13,8 @@ ENV PATH=/root/.cargo/bin:${PATH}
 RUN cargo build --release -p core-dump-composer
 
 FROM registry.access.redhat.com/ubi8/ubi AS rhel8builder
+
+ARG CRICTL_VERSION=1.33.0
 
 RUN yum install -y gcc openssl-devel && \
     rm -rf /var/cache/dnf && \
